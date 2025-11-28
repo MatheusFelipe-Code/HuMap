@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tutorial</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tutorial.css">
+</head>
+
+<body>
+
+<h2>COMO EXPLORAR O MAPA</h2>
+
+<p class="compacto">
+Procure o local desejado utilizando a barra de pesquisa ou simplesmente arrastando o mapa pela tela. Você pode usar a opção filtro para especificar o tipo de denúncia que deseja visualizar ou clicar em Adicionar para registrar uma nova denúncia.
+</p>
+
+<p class="compacto">
+Utilize esse ícone <span class="plus-outline"></span> para denunciar diferentes problemáticas.
+</p>
+
+<h3>TIPOS DE INTERCORRÊNCIAS:</h3>
+
+<p><span class="emoji"><img src="/Front-end/src/assets/violencia urbana.png" alt=""></span>Violência urbana, ocorrências de assaltos e crimes de alta periculosidade</p>
+<p><span class="emoji"><img src="/Front-end/src/assets/Saneamento.png" alt=""></span>Problemas de saneamento básico, irregularidades no fornecimento de energia elétrica e práticas fraudulentas.</p>
+<p><span class="emoji"><img src="/Front-end/src/assets/Infraestutura urbana.png" alt=""></span>Infraestrutura urbana, transporte público e obstrução de vias.</p>
+<p><span class="emoji"><img src="/Front-end/src/assets/meio ambiente.png" alt=""></span>Meio ambiente, com quedas de árvores, alagamentos e deslizamentos</p>
+
+<button class="floating-button">HuMap</button>
+
+<script>
+/* menu lateral */
+const menu = document.getElementById('menu');
+document.getElementById('hamburger').onclick = (e) => {
+e.stopPropagation(); menu.classList.add('open');
+};
+document.getElementById('btn-close').onclick = (e) => {
+e.stopPropagation(); menu.classList.remove('open');
+};
+
+/* notificações */
+const bell = document.getElementById('notify');
+const notifBox = document.getElementById('notif-box');
+
+bell.addEventListener('click', (e) => {
+e.stopPropagation();
+notifBox.classList.toggle('open');
+});
+</script>
+
+</body>
+</html>
