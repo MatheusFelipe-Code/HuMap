@@ -1,0 +1,48 @@
+   *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:white;font-family:Arial,sans-serif;text-align:center;min-height:100vh;}
+
+    h2{color:#005BB5;margin-top:40px;font-size:1.6rem;}
+    h3{margin-top:40px;font-size:1.3rem;}
+
+    p{width:85%;max-width:800px;margin:18px auto;text-align:left;line-height:1.6;font-size:1rem;
+    display:flex;align-items:center;gap:14px;color:black;}
+
+    p.compacto{line-height:1.3 !important;}
+    .emoji{font-size:2rem;}
+    .emoji img{width:45px;height:45px;}
+
+    /* BOTÃO + */
+    .plus-outline{
+        width:40px;height:40px;border:3px solid #005BB5;
+        border-radius:50%;position:relative;cursor:pointer;
+        transition:transform .25s, background .25s, border .25s, box-shadow .25s;
+        flex-shrink:0;display:flex;align-items:center;justify-content:center;
+        user-select:none;
+    }
+    .plus-outline::before,.plus-outline::after{
+        content:"";position:absolute;background:#005BB5;transition:.25s;
+    }
+    .plus-outline::before{width:22px;height:3px;}
+    .plus-outline::after{width:3px;height:22px;}
+    .plus-outline:hover{
+        background:#005BB5;filter:brightness(1.1);
+        box-shadow:0 0 10px rgba(0,0,0,.20);border-color:#004a94;}
+    .plus-outline:hover::before,.plus-outline:hover::after{background:white;}
+    .plus-outline:active{transform:scale(.87);background:#004a94;border-color:#003d78;}
+    .plus-outline:focus{outline:3px solid #7db9ff;outline-offset:3px;}
+
+    /* BOTÃO HuMap */
+    .floating-button{
+        position:fixed;bottom:20px;right:20px;background:#005BB5;color:white;border:none;
+        border-radius:50px;padding:14px 28px;font-weight:bold;box-shadow:0 6px 16px rgba(0,0,0,.25);
+        font-family:Montserrat,sans-serif;cursor:pointer;
+        transition:transform .25s, box-shadow .25s;
+    }
+    .floating-button:hover{transform:scale(1.07);box-shadow:0 8px 18px rgba(0,0,0,.30);}
+    .floating-button:active{transform:scale(.92);}
+
+
+    #btn-close{
+        position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+        background:#005BB5;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;
+    }
