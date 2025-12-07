@@ -15,6 +15,7 @@
     align-items: center;
     padding: 0 15px;
     position: relative;
+    justify-content: space-between;
 }
 
 /* Ícone hambúrguer */
@@ -37,9 +38,9 @@
 .perfil-btn {
     background: none;
     border: none;
-    margin-right: 2rem;
+    margin-right: 1rem;
     cursor: pointer;
-    padding: 3rem;
+    padding: 0.8rem;
 }
 
 .perfil-btn img {
@@ -61,10 +62,12 @@
     width: 40rem; /* diminui o tamanho */
     height: 1rem; /* opcional */
     padding-right: 5rem;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     border: 10rem;
     outline: none;
     font-size: 1rem;
+    position: relative;
+    margin-left: 20vw;
 }
 
 /* Botão da lupa */
@@ -74,11 +77,18 @@
     background: none;
     border: none;
     cursor: pointer;
+    position: absolute;
+
 }
 
 .search-btn img {
     width: 20px;
     height: 20px;
+    position: absolute;
+    display: flex;
+    opacity: 30%;
+    align-self: center;
+    justify-self: flex-end;
 }
 
 /* Sugestões */
@@ -111,6 +121,7 @@
     border: none;
     cursor: pointer;
     padding: 0;
+    margin-right: 2vw;
 
 }
 
@@ -217,3 +228,100 @@
         top: 45px;
     }
 }
+
+
+#perfil{
+    display: flex;
+    background-color: #005BB5;
+    height: auto;
+    text-decoration: none;
+    width: auto;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#perfil-img{
+    background-color: beige;
+    width: 12vw;
+    height: 12vw;
+    margin-left: 22px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+}
+
+#perfil-text{
+    font-size: 1.5vw;
+    margin-bottom: 8px;
+    color: white;
+}
+
+#perfil-icones{
+    width: 1vw;
+    height: 1vw;
+    display: flex;
+    justify-self: flex-end;
+    align-self: end;
+}
+
+.conteudo{
+padding:30px 40px;
+}
+ 
+.post{
+max-width:700px;
+margin:auto;
+}
+ 
+.post-header{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+}
+.post-header .bolinha{
+width:35px;
+height:35px;
+border-radius:50%;
+background:#f4bf16;
+}
+.post-header span{
+font-weight:700;
+}
+ 
+.post-card{
+background:#f4bf16;
+height:380px;
+border-radius:8px;
+position:relative;
+padding:10px;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+}
+ 
+.legenda{
+font-size:11px;
+color:#00000077;
+border-top:1px solid #ffffff55;
+padding-top:6px;
+}
+ 
+.acoes{
+display:flex;
+justify-content:center;
+gap:25px;
+margin-top:15px;
+    }
+ 
+.acoes button{
+background:none;
+border:none;
+cursor:pointer;
+}
+
+.acoes img{
+    width: 3vw;
+    height:3vw;
+}
+

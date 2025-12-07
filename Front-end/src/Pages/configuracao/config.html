@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Navbar OpenAPI</title>
-</head>
-<body>
+<html lang="pt-br">
 
-    <!-- MENU LATERAL -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações</title>
+    <link rel="stylesheet" href="styleconfig.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle" />
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+
+<body>
+     <!-- MENU LATERAL -->
     <aside id="menu" class="menu">
         <div class="menu-content">
             <a href="#">Feed</a>
@@ -41,7 +47,9 @@
 
         <!-- Perfil como BOTÃO -->
         <button class="perfil-btn" onclick="window.location.href='/perfil.html'">
-            <img src="https://via.placeholder.com/35" alt="" />
+            <span class="material-symbols-outlined">
+account_circle
+</span>
             <p>Ola, Itala</p>
         </button>
 
@@ -134,5 +142,49 @@
         }
     </script>
 
+
+    <div class="container">
+        <div class="item"><span class="material-icons">lock</span> Conta e Segurança</div>
+        <div class="item"><span class="material-icons">public</span> Preferências do Sistema</div>
+        <div class="item"><span class="material-icons">mail</span> Notificações</div>
+        <div class="item"><span class="material-icons">credit_card</span> Pagamentos e Assinaturas</div>
+        <div class="item"><span class="material-icons">description</span> Privacidade e Dados</div>
+
+        <div class="footer-btn">
+            <button class="btn-voltar" id="btn-voltar">Voltar</button>
+        </div>
+    </div>
+    <footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <h1 class="footer-logo">HuMap</h1>
+      <p>Conectando pessoas, ideias e soluções.</p>
+    </div>
+
+    <div class="footer-col">
+      <h2>Navegação</h2>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Sobre</a></li>
+        <li><a href="#">Projetos</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h2>Contato</h2>
+      <p>humap@projeto.com</p>
+      <p>Recife - PE</p>
+    </div>
+
+  </div>
+
+  <div class="footer-copy">
+    © 2025 HuMap — Todos os direitos reservados.
+  </div>
+</footer>
+
 </body>
-</html>         
+
+</html>
