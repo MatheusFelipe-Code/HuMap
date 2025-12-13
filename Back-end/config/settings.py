@@ -24,15 +24,16 @@ FRONTEND_DIR = BASE_DIR.parent / 'Front-end' / 'src'
 
 # Quick-start development settings - unsuitable for production
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-chave-padrao-para-dev')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Compara a string do .env para retornar True ou False
-DEBUG = os.getenv('DEBUG') == 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# --- ALTERAÇÃO SOLICITADA PARA DEPLOY NA VERCEL ---
-# Define os hosts permitidos para rodar a aplicação
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1', 'localhost']
+# --- ALTERAÇÃO PARA DEPLOY NO RENDER ---
+# Define os hosts permitidos. '*' permite todos (mais fácil para deploy inicial).
+# Em produção rigorosa, você usaria ['.onrender.com', 'seu-dominio.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,7 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Essencial para arquivos estáticos na Vercel
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Essencial para arquivos estáticos
     'corsheaders.middleware.CorsMiddleware', # Middleware do CORS
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,9 +99,10 @@ DATABASES = {
     }
 }
 
+# Configuração para o Render (PostgreSQL)
 database_url = os.getenv('DATABASE_URL')
 if database_url:
-    DATABASES['default'] = dj_database_url.parse(database_url)
+    DATABASES['default'] = dj_database_url.parse(database_url, conn_max_age=600)
 
 
 # Password validation
@@ -147,6 +149,10 @@ STATICFILES_DIRS = [
 
 # Configuração para quando rodar o collectstatic no servidor
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# --- CONFIGURAÇÃO DO WHITENOISE PARA RENDER ---
+# Isso garante que o Django sirva os arquivos de forma otimizada
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Configurações de Mídia (Uploads de usuários)
 MEDIA_URL = '/media/'
