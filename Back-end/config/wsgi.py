@@ -14,3 +14,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 application = get_wsgi_application()
+
+# ADICIONE ESTA LINHA PARA A VERCEL:
+# A Vercel procura por uma variável chamada 'app' por padrão em ambientes serverless
+app = application
