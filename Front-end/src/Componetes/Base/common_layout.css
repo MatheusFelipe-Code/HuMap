@@ -1,0 +1,478 @@
+/* ========================= GERAL ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap');
+
+body {
+    background-color: #f4f1ec; /* Cor de fundo padrão do site */
+    padding-top: 70px; /* IMPORTANTE: Empurra o conteúdo para baixo para não ficar atrás da Navbar fixa */
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* ========================= NAVBAR FIXA ========================= */
+.main-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #005BB5; /* Azul HuMap */
+    height: 70px;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050; /* Garante que fique acima de mapas e modais */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- 1. Botão Menu (Hambúrguer) --- */
+#menuToggleBtn {
+    background: transparent;
+    border: none;
+    color: white !important;
+    font-size: 26px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+/* --- 2. Perfil do Usuário (Imagem + Texto) --- */
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-right: auto; /* Mantém o perfil à esquerda, logo após o menu */
+    margin-left: 10px;
+    border-radius: 50px;
+    transition: background-color 0.2s;
+    color: white !important;
+}
+
+.user-profile-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-profile-btn .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.3); /* Borda fina na foto */
+}
+
+.user-profile-btn p {
+    color: white !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* --- 3. Barra de Pesquisa (Centralizada) --- */
+.search-area {
+    position: absolute; /* Centraliza independente dos outros itens */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.search-area input {
+    width: 100%;
+    padding: 8px 45px 8px 20px; /* Espaço para o texto e para a lupa */
+    border-radius: 25px; /* Pílula arredondada */
+    border: none;
+    outline: none;
+    font-size: 14px;
+    height: 40px;
+}
+
+.search-area .search-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.search-area .search-btn img {
+    width: 18px;
+    opacity: 0.6;
+}
+
+/* --- 4. Botão de Notificação (Sino) --- */
+.notify-area {
+    margin-left: 20px;
+}
+
+.notify-btn {
+    background-color: #dc3545; /* Fundo Vermelho */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;   /* Centraliza o ícone */
+    width: 40px;               /* Largura fixa */
+    height: 40px;              /* Altura fixa */
+    border-radius: 50%;        /* Formato circular */
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra */
+}
+
+.notify-btn:hover {
+    background-color: #bb2d3b; /* Vermelho mais escuro no hover */
+}
+
+.notify-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1); /* Ícone branco */
+}
+
+/* ========================= NOTIFICAÇÕES (RESPONSIVO E CENTRALIZADO) ========================= */
+.notif-box {
+    display: none;
+    position: fixed;
+    top: 75px; /* Logo abaixo da navbar */
+    
+    /* CENTRALIZAÇÃO EM BAIXO DA PESQUISA */
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto; 
+    
+    /* TAMANHO ADAPTÁVEL */
+    width: 90%; /* Ocupa 90% da tela em celulares */
+    max-width: 500px; /* Limita ao tamanho da barra de pesquisa em telas grandes */
+    
+    background: #ffffff;
+    color: #444;
+    
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1060;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.notif-box.open {
+    display: block;
+    animation: slideDown 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.notif-box p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    line-height: 1.4;
+    transition: background 0.2s;
+}
+
+.notif-box p:last-child {
+    border-bottom: none;
+}
+
+.notif-box p:hover {
+    background-color: #f5f9ff;
+    color: #005BB5;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+    to { opacity: 1; transform: translateY(0) translateX(-50%); }
+}
+
+/* ========================= SIDEBAR (MENU LATERAL) ========================= */
+.main-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: #005BB5;
+    z-index: 1100;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-sidebar.active {
+    transform: translateX(0);
+}
+
+.main-sidebar .list-group-item {
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.main-sidebar .list-group-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.sidebar-close-btn {
+    margin-top: auto;
+    background: #004a99;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1090;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* ========================= FOOTER ========================= */
+.main-footer {
+    background-color: #005BB5;
+    color: white;
+    padding: 40px 20px 10px 20px;
+    margin-top: auto; /* Empurra footer para baixo se o conteúdo for curto */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-col {
+    flex: 1 1 200px;
+}
+
+.footer-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.footer-col h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.copyright-copy {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+    .search-area {
+        position: relative;
+        left: auto;
+        transform: none;
+        width: 100%;
+        margin: 0 10px;
+        max-width: none;
+    }
+    
+    .user-profile-btn p {
+        display: none; /* Esconde o nome "Olá Usuário" no celular */
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* AJUSTE FINO NOTIFICAÇÕES MOBILE */
+    .notif-box {
+        top: 65px; 
+        width: 95%; 
+    }
+}
+
+/* =========================================
+   SUGESTÕES DE PESQUISA (Estilo Google Maps)
+   ========================================= */
+
+/* Caixa principal das sugestões (Flutuante) */
+.suggestions-box {
+    position: absolute;
+    top: 55px; /* Logo abaixo da barra de pesquisa */
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 15px; /* Bordas arredondadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra suave */
+    z-index: 2000;
+    display: none;
+    overflow: hidden;
+    padding: 5px 0;
+}
+
+/* Item individual da lista */
+.suggestion-item {
+    display: flex; /* Alinha ícone e texto lado a lado */
+    align-items: center;
+    gap: 15px; /* Espaço entre ícone e texto */
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+    background: white;
+    transition: background 0.2s;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #f2f2f2; /* Cinza claro ao passar o mouse */
+}
+
+/* Ícone de Pin (Gota invertida) */
+.suggestion-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666; /* Cor cinza do ícone */
+    font-size: 20px;
+    min-width: 24px;
+}
+
+/* Container das informações de texto */
+.suggestion-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Texto Principal (Cidade/Local) - NEGRITO */
+.suggestion-info strong {
+    font-family: 'Montserrat', sans-serif;
+    color: #202124; /* Cor quase preta igual Google */
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Texto Secundário (Endereço completo/CEP) - CINZA E MENOR */
+.suggestion-info small {
+    font-family: 'Open Sans', sans-serif;
+    color: #70757a; /* Cinza específico do Google */
+    font-size: 13px;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========================= BOTÃO VOLTAR (GLOBAL) ========================= */
+.btn-voltar-padrao {
+    /* POSICIONAMENTO FIXO (Igual ao Feed) */
+    position: fixed;
+    left: 20px;
+    top: 90px; /* Abaixo da Navbar (70px) + 20px de respiro */
+    
+    /* TAMANHO E ESTILO */
+    width: 40px;
+    height: 40px;
+    background-color: transparent; 
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1040; /* Acima do conteúdo, mas abaixo do Menu Lateral (que é 1100) */
+    transition: transform 0.2s ease;
+}
+
+.btn-voltar-padrao:hover {
+    transform: scale(1.1);
+}
+
+.btn-voltar-padrao img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Ajuste para telas pequenas (Celular) */
+@media (max-width: 768px) {
+    .btn-voltar-padrao {
+        /* No celular, às vezes é melhor absolute para não cobrir texto ao rolar, 
+           mas se quiser fixo igual, mantenha fixed */
+        position: absolute; 
+        top: 80px; 
+        left: 10px;
+    }
+}

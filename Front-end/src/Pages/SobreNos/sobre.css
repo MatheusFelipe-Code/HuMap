@@ -1,0 +1,149 @@
+/* SEÇÃO SOBRE NÓS */
+.sobre-nos-section {
+    text-align: center;
+    padding: 3rem 1rem; /* Adicionado padding lateral para telas pequenas */
+    background: #f3f3f3;
+    min-height: 100vh; /* Garante que a cor de fundo cubra a tela */
+}
+
+.sobre-nos-section h1 {
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #005bb5;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.sobre-nos-section p.texto-justificado {
+    font-size: 26px;
+    word-spacing: 6px;
+    font-weight: 700;
+    margin: 0 auto 4rem auto; /* Centraliza o texto horizontalmente */
+    max-width: 750px;
+    line-height: 1.6rem;
+    white-space: pre-line; 
+    color: #333;
+    text-align: center;
+}
+
+/* CONTAINER DOS CARDS - CENTRALIZADO */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 0 0 40px 0;
+    
+    /* Centralização da grade */
+    max-width: 1200px; 
+    margin: 0 auto;    
+    width: 100%;
+}
+
+/* CARD */
+.card {
+    background: #fcfcfc;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    text-align: center;
+    position: relative;
+    padding-bottom: 3.5rem;
+    transition: .3s;
+    border: none;
+    
+    /* Garante alinhamento central dos itens internos */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.card:hover {
+    transform: scale(1.02); 
+}
+
+/* FOTO - Centralização */
+.foto {
+    display: block; /* Importante para aceitar margem automática */
+    margin: 0 auto 0.8rem auto; /* Centraliza horizontalmente */
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #005BB5; /* Borda azul */
+}
+
+/* NOME */
+.card h2 {
+    margin: 0.5rem 0 0.4rem 0;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* IDADE E FUNÇÃO */
+.card .info-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-bottom: 0.8rem;
+    width: 100%; /* Garante largura total para alinhar texto */
+}
+
+.card .info-extra p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* LINKS */
+.links {
+    position: absolute;     
+    bottom: 1rem;
+    left: 50%;              
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+.links a {
+    text-decoration: none;
+    background: #005bb5;
+    padding: 0.6rem 0.8rem;
+    color: #fff;
+    border-radius: 0.8rem;
+    font-size: 13px;
+    transition: 0.3s;
+    font-family: sans-serif;
+}
+
+.links a:hover {
+    background: #003f80;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 900px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px; /* Ajuste opcional para tablets */
+    }
+}
+
+@media (max-width: 600px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sobre-nos-section h1 {
+        font-size: 32px;
+    }
+    
+    .sobre-nos-section p.texto-justificado {
+        font-size: 18px;
+    }
+}

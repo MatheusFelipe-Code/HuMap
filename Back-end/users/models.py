@@ -1,4 +1,3 @@
-# Back-end/users/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -9,6 +8,11 @@ class User(AbstractUser):
     telefone = models.CharField(max_length=20, null=True, blank=True)
     receber_notificacoes = models.BooleanField(default=False)
 
+    # NOVO CAMPO: Foto de Perfil
+    # As imagens serão salvas na pasta 'media/perfil_fotos/'
+    # CORREÇÃO: Removido o default para que o usuário comece sem foto (null)
+    foto = models.ImageField(upload_to='perfil_fotos/', blank=True, null=True)
+
     # Vamos usar o email como login principal em vez do 'username'
     email = models.EmailField(unique=True)
     
@@ -18,3 +22,13 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def get_foto_url(self):
+        """
+        Retorna a URL da foto se existir, caso contrário retorna None.
+        Isso ajuda no template a decidir se mostra a foto do usuário ou a padrão.
+        """
+        # Verifica se existe foto e se ela tem um atributo url válido
+        if self.foto and hasattr(self.foto, 'url'):
+            return self.foto.url
+        return None
