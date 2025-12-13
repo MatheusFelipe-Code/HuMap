@@ -59,14 +59,18 @@
             <span class="material-icons-outlined">menu</span>
         </button>
 
-        <button class="user-profile-btn" onclick="window.location.href='{% url 'users:perfil' %}'"> 
-            {% if user.foto %}
+        <button class="user-profile-btn" onclick="{% if user.is_authenticated %}window.location.href='{% url 'users:perfil' %}'{% else %}window.location.href='{% url 'users:login' %}'{% endif %}"> 
+            {% if user.is_authenticated and user.foto %}
                 <img src="{{ user.foto.url }}" alt="Perfil" class="profile-img" id="header-user-avatar"/>
-            {% else %}
+            {% elif user.is_authenticated %}
                 <div class="profile-img" id="header-user-avatar" style="background-color: #ccc;"></div>
+            {% else %}
+                <div class="profile-img" id="header-user-avatar" style="background-color: #666; display:flex; align-items:center; justify-content:center;">
+                    <span class="material-icons" style="color:white; font-size: 18px;">person</span>
+                </div>
             {% endif %}
             
-            <p>Olá, {{ user.first_name|default:'Usuário' }}!</p>
+            <p>Olá, {{ user.first_name|default:'Visitante' }}!</p>
         </button>
 
         <div class="search-area">
