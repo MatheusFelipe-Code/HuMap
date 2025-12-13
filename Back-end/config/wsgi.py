@@ -15,6 +15,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 application = get_wsgi_application()
 
-# ADICIONE ESTA LINHA PARA A VERCEL:
-# A Vercel procura por uma variável chamada 'app' por padrão em ambientes serverless
+# --- CONFIGURAÇÃO PARA VERCEL ---
+# A Vercel procura por uma variável chamada 'app' por padrão em ambientes serverless.
+# Isso expõe a aplicação WSGI do Django como 'app'.
 app = application
