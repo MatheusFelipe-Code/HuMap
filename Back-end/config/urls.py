@@ -1,6 +1,3 @@
-"""
-URL configuration for config project.
-"""
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
@@ -11,29 +8,29 @@ from core.views import sobre_view
 
 urlpatterns = [
     # --- ROTA DA PÁGINA INICIAL ---
-    # Quando acessar a raiz (vazio), redireciona para o Login
+    # Quando acessar o site (vazio), manda direto para o Login
     path('', RedirectView.as_view(url='/users/login/', permanent=False)),
 
-    # Painel Administrativo do Django
+    # Painel Administrativo
     path('admin/', admin.site.urls),
 
-    # App Core: Contém Home, Suporte, Configurações, Feed e a API de Denúncias.
+    # App Core: Contém Home, Feed, Suporte, etc.
+    # Note que usamos include com namespace 'core' implícito nas urls do app
     path('', include('core.urls')), 
 
-    # App Users: Contém Login, Cadastro e Perfil.
+    # App Users: Contém Login, Cadastro, Perfil
     path('users/', include('users.urls')),
 
-    # Rota específica para a página "Sobre Nós"
+    # Rota específica para a página "Sobre Nós" (acessível via /sobre/)
     path('sobre/', sobre_view, name='sobre_nos'),
-
-    # Rota de compatibilidade
-    path('info/', include(('core.urls', 'info'), namespace='info')),
     
-    # --- ROTA PARA SERVIR ARQUIVOS DE MÍDIA (FOTOS) NO RENDER ---
-    # Isso garante que as fotos de perfil e denúncias apareçam mesmo com DEBUG=False
-    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    # Rota de compatibilidade (opcional, mantive do seu código)
+    path('info/', include(('core.urls', 'info'), namespace='info')),
+
+    # --- SERVIR ARQUIVOS DE MÍDIA (FOTOS) ---
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
-# --- SERVIR ARQUIVOS ESTÁTICOS (CSS/JS) EM MODO DEBUG ---
+# --- SERVIR ARQUIVOS ESTÁTICOS EM DEBUG ---
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
