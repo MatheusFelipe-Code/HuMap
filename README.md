@@ -73,8 +73,7 @@ venv\Scripts\activate
 ```bash
 source venv/bin/activate
 ````
-Se tudo der certo, você verá algo assim no terminal:
-(venv)
+💡 **Dica:** O prefixo `(venv)` no início da linha indica que você está usando o ambiente virtual corretamente.
 
 <br>
 
