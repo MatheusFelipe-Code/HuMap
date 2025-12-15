@@ -83,6 +83,9 @@ Ainda dentro da pasta Back-end e com a venv ativa:
 ```bash
 pip install -r requirements.txt
 ````
+> ✅ **O que isso faz:**  
+> Este comando instala todas as dependências do projeto listadas no arquivo `requirements.txt`, garantindo que o ambiente virtual tenha todos os pacotes necessários para o HuMap rodar corretamente.
+
 
 <br>
 
