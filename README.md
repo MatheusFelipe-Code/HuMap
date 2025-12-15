@@ -27,7 +27,6 @@ Antes de começar, tenha instalado na sua máquina:
 
 - Python 3.10+
 - Git
-- Node.js (opcional, apenas se for mexer no Front-end futuramente)
 - Navegador atualizado
 
 <br>
