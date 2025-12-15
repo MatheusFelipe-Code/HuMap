@@ -10,38 +10,34 @@
 
 /* --- CABEÇALHO DO FEED --- */
 .feed-header {
-    /* Mantemos a altura para dar um respiro, mesmo com o botão fixo fora */
     height: 50px; 
     margin-bottom: 10px;
 }
 
 /* ESTILO DA SETA (AGORA FIXO NA ESQUERDA) */
 .botao-voltar-feed {
-    /* POSICIONAMENTO FIXO */
-    position: fixed;    /* Muda de absolute para fixed (preso na tela) */
-    left: 20px;         /* Cola na margem esquerda da janela */
-    top: 90px;          /* Fica 20px abaixo da Navbar (70px + 20px) */
-    
-    /* TAMANHO E APARÊNCIA */
+    position: fixed;
+    left: 20px;
+    top: 90px;
     width: 40px;
     height: 40px;
     background-color: transparent; 
     border: none;
     padding: 0;
     cursor: pointer;
-    z-index: 100;       /* Z-index alto para ficar sobre o fundo */
+    z-index: 100;
     transition: transform 0.2s ease;
 }
 
 .botao-voltar-feed:hover {
-    transform: scale(1.1); /* Efeito de zoom leve ao passar o mouse */
+    transform: scale(1.1);
 }
 
 /* ESTILO DA IMAGEM (CONTROLE RÍGIDO DE TAMANHO) */
 .imagem-seta-azul {
-    width: 100%;       /* Ocupa 100% dos 40px do botão */
-    height: 100%;      /* Ocupa 100% dos 40px do botão */
-    object-fit: contain; /* Garante que a imagem não distorça */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     display: block;
 }
 
@@ -76,14 +72,28 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+/* --- CORREÇÃO AQUI --- */
 .post-imagem-feed {
     width: 100%;
-    height: 300px;
+    height: 300px; /* Define a altura do quadrado/container */
     background: #f0f0f0;
     border-radius: 10px;
     margin: 15px 0;
-    object-fit: cover;
+    overflow: hidden; /* Garante que a imagem não saia das bordas arredondadas */
+    display: flex;    /* Ajuda a centralizar se necessário */
+    align-items: center;
+    justify-content: center;
 }
+
+/* Nova regra para a imagem dentro do container */
+.post-imagem-feed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* Faz a imagem preencher o espaço cortando o excesso */
+    object-position: center; /* Centraliza a imagem */
+    display: block;
+}
+/* --------------------- */
 
 .post-texto-feed {
     font-size: 15px;
@@ -233,10 +243,9 @@
 }
 
 /* RESPONSIVIDADE ESPECÍFICA PARA A SETA */
-/* Em telas menores (celulares), a seta volta para perto do conteúdo */
 @media (max-width: 1000px) {
     .botao-voltar-feed {
-        position: absolute; /* Volta a ser relativo ao container */
+        position: absolute;
         left: 0;
         top: 0;
     }
