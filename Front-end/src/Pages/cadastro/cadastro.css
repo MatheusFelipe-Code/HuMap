@@ -1,170 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap');
+/* --- CONFIGURAÇÕES GERAIS --- */
 * {
     margin: 0;
     padding: 0;
     font-family: "Montserrat", sans-serif;
+    box-sizing: border-box; /* Garante que padding não aumente o tamanho total dos elementos */
 }
 
 body {
     width: 100%;
-    height: 100%;
+    min-height: 100vh; /* Garante altura mínima da tela inteira */
     background-color: #F3EEE8;
 }
 
 main {
     width: 100%;
-    height: 100%;
-    position: absolute;
+    min-height: 100vh;
+    display: flex; /* O segredo do alinhamento moderno */
+    flex-direction: row; /* No PC, um ao lado do outro */
+    justify-content: space-between;
+    align-items: stretch; /* Faz as duas partes terem a mesma altura se possível */
 }
 
+/* --- LADO ESQUERDO (Texto e Ícone) --- */
 .left-page {
-    width: 500px;
-    float: left;
-    display: block;
-    margin-left: 100px;
-    margin-top: 50px;
+    width: 40%; /* Ocupa 40% da tela no PC */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center;
+    padding: 50px;
     text-align: center;
 }
 
 .left-page img {
-    width: 179px;
-    height: 179px;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 20px;
 }
 
 .left-page p {
     text-align: justify;
-    line-height: 32px;
+    line-height: 1.6; /* Melhor leitura */
+    margin-bottom: 15px;
+    color: #333;
 }
 
 .left-page button {
-    width: 100%;
+    width: 200px;
     background-color: #005BB5;
     color: white;
-    padding: 10px;
+    padding: 12px;
     border: none;
     border-radius: 15px;
     margin-top: 30px;
     cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
+.left-page button:hover {
+    background-color: #004494;
+}
+
+/* --- LADO DIREITO (Formulário Azul) --- */
 .rigth-page {
-    width: 842px;
-    height: 100%;
-    float: right;
+    width: 60%; /* Ocupa o resto da tela no PC */
     background-color: #005BB5;
     border-radius: 50px 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
 }
 
+/* Container do formulário */
 .form-cadastro {
-    width: 500px;
-    padding: 0 20px 0 20px;
-    margin: 0 auto;
-    
+    width: 100%;
+    max-width: 500px; /* Limite máximo para não ficar gigante em telas wide */
+}
+
+.form-cadastro form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Esconde a imagem extra no PC (já tem na esquerda) */
+.img-rigth {
+    display: none; 
 }
 
 .form-cadastro label {
     color: white;
-    display: flex;
+    margin-top: 15px;
+    font-weight: 500;
 }
 
+/* INPUTS RESPONSIVOS */
 .form-cadastro input {
-    width: 465px;
-    padding: 10px;
-    margin: 8px 0;
+    width: 100%; /* Ocupa todo o espaço disponível do pai */
+    padding: 12px;
+    margin-top: 5px;
     border: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.form-cadastro input[type=checkbox] {
-    width: 20px;
-    float: left;
-}
-
-.form-cadastro input[type=submit] {
-    width: 100%;
-    background: white;
-    color: #005BB5;
+    border-radius: 8px;
+    outline: none;
     font-size: 1rem;
-    border: none;
-    border-radius: 10px;
+}
+
+/* Checkbox e texto lado a lado */
+.form-cadastro label[for="checkbox"], 
+.form-cadastro label[for="recebernoti"] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
     cursor: pointer;
-    margin-top: 10px;
+}
+
+.form-cadastro input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
 }
 
 .form-cadastro p {
-    
-    padding: 10px;
+    margin: 0;
+    font-size: 0.9rem;
+    color: white;
 }
-@media screen and (min-width: 780px){
-    .img-rigth{
-        display: none;
-        z-index: -999;
-    }
-    .rigth-page button{
-        display: none;
-    }
-    .rigth-page .form-cadastro{
-        margin-top: 50px;
-    }
+
+.form-cadastro a {
+    color: #ffd700; /* Destaque para o link */
+    text-decoration: none;
 }
-@media screen and (max-width: 768px) {
+
+/* Botão de Cadastrar */
+.form-cadastro input[type="submit"] {
+    background: white;
+    color: #005BB5;
+    font-weight: bold;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-cadastro input[type="submit"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Botão Voltar (aparece só no mobile dentro do form) */
+#btn-voltar-mobile {
+    display: none;
+}
+
+
+/* --- RESPONSIVIDADE (CELULAR E TABLET) --- */
+@media screen and (max-width: 900px) {
+    main {
+        flex-direction: column; /* Coloca um embaixo do outro */
+    }
+
+    /* Esconde o lado esquerdo no celular (conforme seu design original) */
     .left-page {
         display: none;
     }
-    .rigth-page{
+
+    /* Lado Direito vira Tela Cheia */
+    .rigth-page {
         width: 100%;
-        height: 130%;
-        background-color: #005BB5;
+        height: auto;
+        min-height: 100vh;
         border-radius: 0;
-        display: flex;
-        justify-content: center;
+        padding: 20px;
     }
-    .rigth-page .form-cadastro{
+
+    .img-rigth {
+        display: block; /* Mostra a logo no topo do form */
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 20px auto;
+    }
+
+    /* Botão Voltar Mobile */
+    #btn-voltar-mobile {
+        display: block;
         width: 100%;
-        height: 100%;
-        text-align: center;
-    }
-    .rigth-page .img-rigth{
-        width: 179px;
-        height: 179px;
-    }
-    .rigth-page input{
-        width: 100%;
-    }
-    .rigth-page input[type = submit]{
-        width: 100%;
-    }
-    .rigth-page button{
-        width: 100%;
-        background: #005BB5;
-        color:white ;
-        font-family: sans-serif;
-        font-size: 1rem;
-        border: 1px white solid;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 12px;
         border-radius: 10px;
+        margin-top: 15px;
+        font-weight: bold;
         cursor: pointer;
-        margin-top: 10px;
-        padding: 10px;
-    }
-    .rigth-page input[type = submit]:hover{
-        background-color: aliceblue;
-        transition: 1s;
-    }
-    .rigth-page button:hover{
-        background-color: black;
-        transition: 1s;
     }
 }
 
-/* --- CÓDIGO EXTRA: REMOVE AS SETINHAS DE INPUTS NUMÉRICOS --- */
-/* Para Chrome, Safari, Edge, Opera */
+/* --- REMOVE AS SETINHAS DE INPUTS NUMÉRICOS --- */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Para Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
