@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
-{% load static %} 
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -16,52 +16,56 @@
             <img src="{% static 'assets/iconhumap.png' %}" alt="icon" name="icone-humap">
             <div class="text-apresentacion">
                 <p class="text-cadastro">
-                   O HuMap é uma rede social de impacto local criada para facilitar o mapeamento e a denúncia de problemas em bairros, cidades e comunidades. Criando uma ferramenta simples, transparente e colaborativa para fortalecer a cidadania.
-               </p>
+                    O HuMap é uma rede social de impacto local criada para facilitar o mapeamento e a denúncia de problemas em bairros, cidades e comunidades. Criando uma ferramenta simples, transparente e colaborativa para fortalecer a cidadania.
+                </p>
                 <p>
                     Com o mapa interativo, o HuMap oferece um raio-x vivo dos desafios urbanos. Usuários podem denunciar, validar casos, interagir entre si e acompanhar a resposta de órgãos responsáveis.
                 </p>
-                    <p>
+                <p>
                     Nosso propósito é simples: amplificar vozes locais, gerar pressão pública real e fortalecer a cidadania digital. </p>
 
-                    <p>O HuMap é onde a comunidade — impulsionada pela energia de jovens protagonistas — se une para transformar o lugar onde vive. 🌍💙</p>
+                <p>O HuMap é onde a comunidade — impulsionada pela energia de jovens protagonistas — se une para transformar o lugar onde vive. 🌍💙</p>
             </div>
             <button id="btn-voltar" name="btn-voltar" onclick="window.location.href='{% url 'users:login' %}'">Voltar</button>
         </div>
 
         <div class="rigth-page">
             <div class="form-cadastro">
-                
+
                 <form id="form-cadastro">
                     {% csrf_token %}
-                    
+
                     <img src="{% static 'assets/iconhumap.png' %}" alt="icon" name="icone-humap" class="img-rigth">
-                    
+
                     <label for="nome">Nome : </label>
                     <input type="text" name="nome" id="nome" required>
-                    
+
                     <label for="email"> E-mail : </label>
                     <input type="email" name="email" id="email" required autocomplete="email">
-                    
+
                     <label for="password">Senha : </label>
-                    <input type="password" name="password" id="password" required>
-                    
+                    <input type="password" name="password" id="password" minlength="6" required>
+
                     <label for="confirm_password">Confirmar senha : </label>
-                    <input type="password" name="confirm_password" id="confirm_password" required>
-                    
+                    <input type="password" name="confirm_password" id="confirm_password" minlength="6" required>
+
                     <label for="cpf">CPF / CNPJ : </label>
                     <input type="text" inputmode="numeric" name="cpf" id="cpf" required minlength="11" maxlength="14" placeholder="Apenas números">
-                    
+
                     <label for="dt-nascimento">Data de Nascimento : </label>
                     <input type="date" name="data_nascimento" id="dt-nascimento" required>
-                    
+
                     <label for="numero">Numero de telefone : </label>
                     <input type="text" inputmode="numeric" name="telefone" id="numero" required placeholder="(DDD) 90000-0000">
 
-                    <label for="checkbox"><input type="checkbox" id="checkbox" name="checkbox" required><p>Eu concordo com os <a href="">Termos de uso</a></p></label>
-                    
-                    <label for="recebernoti"><input type="checkbox" id="recebernoti" name="receber_notificacoes"><p>Eu desejo receber notificações via e-mail</p></label>
-                    
+                    <label for="checkbox"><input type="checkbox" id="checkbox" name="checkbox" required>
+                        <p>Eu concordo com os <a href="">Termos de uso</a></p>
+                    </label>
+
+                    <label for="recebernoti"><input type="checkbox" id="recebernoti" name="receber_notificacoes">
+                        <p>Eu desejo receber notificações via e-mail</p>
+                    </label>
+
                     <input type="submit" value="Cadastrar" id="btn-cadastrar">
                     <button type="button" id="btn-voltar-mobile" name="btn-voltar" onclick="window.location.href='{% url 'users:login' %}'">Voltar</button>
                 </form>
@@ -70,12 +74,12 @@
     </main>
 
     <script>
-        document.getElementById('form-cadastro').addEventListener('submit', async function(e) {
+        document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
             e.preventDefault(); // Impede o envio padrão que recarregaria a página
 
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
-            
+
             // Corrige checkboxes (se não marcado, não envia no FormData)
             data.receber_notificacoes = document.getElementById('recebernoti').checked;
 
@@ -91,11 +95,11 @@
 
                 // Verifica o tipo de conteúdo da resposta
                 const contentType = response.headers.get("content-type");
-                
+
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     // Se for JSON, processa normalmente
                     const result = await response.json();
-                    
+
                     if (response.ok) {
                         alert('Cadastro realizado com sucesso!');
                         window.location.href = "{% url 'users:login' %}";
@@ -123,4 +127,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,110 +1,145 @@
-/* ------------------ BANCO LOCAL ------------------ */
-let db = JSON.parse(localStorage.getItem("postsDB")) || {};
-
-function saveDB() {
-    localStorage.setItem("postsDB", JSON.stringify(db));
+/* ==========================
+   PEGAR CSRF
+========================== */
+function getCSRFToken() {
+	return document.cookie
+		.split('; ')
+		.find((row) => row.startsWith('csrftoken='))
+		?.split('=')[1];
 }
 
-function initPost(id) {
-    if (!db[id]) {
-        db[id] = {
-            likes: 0,
-            favorited: false,
-            comments: []
-        };
-    }
-}
+/* ==========================
+   FEED
+========================== */
+document.addEventListener('DOMContentLoaded', () => {
+	document.querySelectorAll('.post-feed').forEach((post) => {
+		const id = post.dataset.id;
 
-/* ------------------ FEED ------------------ */
-document.querySelectorAll(".post-feed").forEach(post => {
-    const id = post.dataset.id;
-    initPost(id);
+		// ===== LIKE =====
+		const likeBtn = post.querySelector('.like-btn-feed');
+		const likeCount = post.querySelector('.like-count-feed');
+		let liked = likeBtn.classList.contains('fa-solid');
+		let likes = parseInt(likeCount.textContent);
 
-    const likeBtn = post.querySelector(".like-btn-feed");
-    const likeCount = post.querySelector(".like-count-feed");
-    const favBtn = post.querySelector(".fav-btn-feed");
-    const commentBtn = post.querySelector(".comment-btn-feed");
-    const commentInput = post.querySelector(".comment-input-feed");
-    const sendBtn = post.querySelector(".send-comment-feed");
-    const commentList = post.querySelector(".comment-list-feed");
-    const commentCount = post.querySelector(".comment-count-feed");
-    const linkBtn = post.querySelector(".link-btn-feed");
-    const reportBtn = post.querySelector(".report-btn-feed");
+		likeBtn.addEventListener('click', () => {
+			likeBtn.classList.add('like-animate-feed');
+			setTimeout(() => likeBtn.classList.remove('like-animate-feed'), 300);
 
-    likeCount.textContent = db[id].likes;
-    commentCount.textContent = db[id].comments.length;
+			liked = !liked;
+			likes = liked ? likes + 1 : likes - 1;
+			likeBtn.classList.toggle('fa-solid', liked);
+			likeBtn.classList.toggle('fa-regular', !liked);
 
-    if (db[id].favorited) favBtn.style.color = "gold";
+			// 🔧 ALTERAÇÃO 1 (AQUI)
+			likeBtn.style.color = liked ? 'red' : '';
 
-    function renderComments() {
-        commentList.innerHTML = "";
-        db[id].comments.forEach(text => {
-            const div = document.createElement("div");
-            div.className = "comment-item-feed";
-            div.textContent = text;
-            commentList.appendChild(div);
-        });
-    }
+			likeCount.textContent = likes;
 
-    renderComments();
+			const formData = new URLSearchParams();
+			formData.append('curtir_denuncia_id', id);
 
-    likeBtn.addEventListener("click", () => {
-        likeBtn.classList.add("like-animate-feed");
-        setTimeout(() => likeBtn.classList.remove("like-animate-feed"), 300);
+			fetch('/feed/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'X-CSRFToken': getCSRFToken(),
+				},
+				body: formData.toString(),
+			});
+		});
 
-        db[id].likes++;
-        likeCount.textContent = db[id].likes;
+		// ===== COMENTÁRIOS =====
+		const commentInput = post.querySelector('.comment-input-feed');
+		const sendBtn = post.querySelector('.send-comment-feed');
+		const commentList = post.querySelector('.comment-list-feed');
+		const commentCount = post.querySelector('.comment-count-feed');
 
-        likeBtn.style.color = "red";
-        saveDB();
-    });
+		sendBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
 
-    favBtn.addEventListener("click", () => {
-        db[id].favorited = !db[id].favorited;
-        favBtn.style.color = db[id].favorited ? "gold" : "black";
-        saveDB();
-    });
+			const text = commentInput.value.trim();
+			if (!text) return;
 
-    sendBtn.addEventListener("click", () => {
-        const text = commentInput.value.trim();
-        if (text === "") return;
+			const formData = new URLSearchParams();
+			formData.append('curtir_denuncia_id', id);
+			formData.append('comentario_texto', text);
 
-        db[id].comments.push(text);
-        commentInput.value = "";
-        commentCount.textContent = db[id].comments.length;
+			fetch('/feed/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'X-CSRFToken': getCSRFToken(),
+				},
+				body: formData.toString(),
+			})
+				.then((res) => {
+					if (!res.ok) throw new Error('Erro ao enviar comentário');
+					return res.text();
+				})
+				.then(() => {
+					const div = document.createElement('div');
+					div.className = 'comment-item-feed';
+					div.textContent = `${requestUserName}: ${text}`;
+					commentList.appendChild(div);
 
-        renderComments();
-        saveDB();
-    });
+					commentInput.value = '';
+					commentCount.textContent = parseInt(commentCount.textContent) + 1;
+				})
+				.catch((err) => console.error(err));
+		});
 
-    linkBtn.addEventListener("click", () => {
-        const fakeLink = `https://seusite.com/post/${id}`;
-        navigator.clipboard.writeText(fakeLink).then(() => {
-            alert("Link copiado:\n" + fakeLink);
-        });
-    });
+		// ===== CARREGAR COMENTÁRIOS EXISTENTES =====
+		const comentariosExistentes = post.dataset.comentarios
+			? JSON.parse(post.dataset.comentarios)
+			: [];
 
-    reportBtn.addEventListener("click", () => openReportModal(id));
+		comentariosExistentes.forEach((c) => {
+			const div = document.createElement('div');
+			div.className = 'comment-item-feed';
+			div.textContent = `${c.usuario}: ${c.texto}`;
+			commentList.appendChild(div);
+		});
+		commentCount.textContent = comentariosExistentes.length;
+
+		// ===== FAVORITAR =====
+		const favBtn = post.querySelector('.fav-btn-feed');
+		favBtn.addEventListener('click', () => {
+			const ativo = favBtn.classList.toggle('ativo');
+
+			// 🔧 ALTERAÇÃO 2 (AQUI)
+			favBtn.style.color = ativo ? 'gold' : '';
+		});
+
+		// ===== COPIAR LINK =====
+		const linkBtn = post.querySelector('.link-btn-feed');
+		linkBtn.addEventListener('click', () => {
+			const url = `${window.location.origin}/denuncia/${id}/`;
+			navigator.clipboard.writeText(url);
+			alert('Link copiado!');
+		});
+
+		// ===== REPORTAR =====
+		const reportBtn = post.querySelector('.report-btn-feed');
+		reportBtn.addEventListener('click', () => {
+			document.querySelector('.modal-overlay-feed').classList.add('active');
+		});
+	});
 });
 
-/* ------------------ MODAL DE DENÚNCIA ------------------ */
-const modal = document.querySelector(".modal-overlay-feed");
+/* ==========================
+   MODAL DE REPORTAR
+========================== */
+const modal = document.querySelector('.modal-overlay-feed');
+if (modal) {
+	modal.querySelector('.cancel-feed').addEventListener('click', () => {
+		modal.classList.remove('active');
+	});
 
-function openReportModal() {
-    modal.classList.add("active");
-
-    const textarea = modal.querySelector(".modal-textarea-feed");
-    textarea.value = "";
-
-    modal.querySelector(".cancel-feed").onclick = () => {
-        modal.classList.remove("active");
-    };
-
-    modal.querySelector(".ok-feed").onclick = () => {
-        if (textarea.value.trim() === "") return;
-
-        alert("Problema enviado:\n\n" + textarea.value);
-        modal.classList.remove("active");
-    };
+	modal.querySelector('.ok-feed').addEventListener('click', () => {
+		const textarea = modal.querySelector('.modal-textarea-feed');
+		if (!textarea.value.trim()) return;
+		alert('Problema enviado:\n\n' + textarea.value);
+		modal.classList.remove('active');
+	});
 }
-// O código de busca e menu foi removido e agora é controlado pelo base/base.html
